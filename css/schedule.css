@@ -1,0 +1,110 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  html, body 
+  {
+    margin: 0;
+    background-color: #f1f1f1;
+    height: 100%;
+  }
+  
+  h1,h2
+  {
+      font-family:Andale Mono;
+  }
+  
+  /* Style the header */
+  header {
+    background-color: #f1f1f1;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+    top: 0;
+  /*  position: fixed;*/
+    width: 100%; /* Full width */
+    height: auto;
+  }
+  
+  header h1{
+      padding: 0;
+      margin: 0;
+  }
+  
+  /* Style the top navigation bar */
+  .topnav {
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+  /* Style the topnav links */
+  .topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  
+  .topnav a:last-child {   
+      float: right;
+  }
+  
+  a.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  /* Change color on hover */
+  .topnav a:hover:not(.active) {
+    background-color: #ddd;
+    color: black;
+  }
+  #mainContent{
+      min-height: 100%;
+      padding-top: 50px;
+      padding-bottom:50px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      background-color: white
+  }
+  
+  #mainContent:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  .column1 {
+    /* float: left; */
+    width: 40%;
+    padding: 15px;
+  }
+
+  .column1_l{
+    width: 50%;
+    padding: 15px;
+  }
+
+  /* .columnr {
+    float: right;
+    width: 60%;
+    padding: 50px;
+  }
+  
+  .columnr p{
+      text-align: left;
+      font-size: 20px;
+  } */
+  
+  footer {
+    background-color: #f1f1f1;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 10px;
+    height: 50px;
+  }
+  
