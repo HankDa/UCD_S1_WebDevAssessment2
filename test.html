@@ -34,27 +34,40 @@ table tr:nth-child(even) {
    
 <script>
 
-var xmlhttp = new XMLHttpRequest();
-var url = "scheduling.json";
-// var parsedObj = new Object();
+/*------------------Glabal Varible---------------------*/
+var url_json = "scheduling.json";
+var parsedObj = new Object();
 var dir_date = {};
 var dir_date_time ={};
+/*-----------------------------------------------------*/
 
-xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        
+
+
+function readJson(url)
+{
+    console.log("Hello1")
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", url, false); // global varible issue: change true to false, check why?
+    xmlhttp.send();
+    parsedObj = JSON.parse(xmlhttp.responseText); 
+
+    // xmlhttp.onreadystatechange = parseJsFileToObj(xmlhttp,obj_json); //check this problem
+}
+
+function parseJsFileToObj(xmlhttp,obj_json)
+{
+    console.log("2")
+    console.log(xmlhttp.readyState)
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+    {
+        console.log("Hello3")
         //Parse the JSON data to a JavaScript variable. 
-        
-        parsedObj = JSON.parse(xmlhttp.responseText);    // Hank: gobal varible fail
-
+        obj_json = JSON.parse(xmlhttp.responseText);    // Hank: gobal varible fail
+        console.log(obj_json);
         // This function is defined below and deals with the JSON data parsed from the file. 
-        displayJSON(parsedObj); 
-
+        // displayJSON(obj); 
     }
-};
-
-xmlhttp.open("GET", url, true);
-xmlhttp.send();
+}
 
 
 function readDate(obj,dir_date_l)
@@ -134,8 +147,8 @@ function displayJSON(obj) {
     // document.getElementById("id02").innerHTML = text_2;
 }
 
-
-// displayJSON_test(parsedObj); 
+readJson(url_json)
+displayJSON(parsedObj)
 
 
 </script>
