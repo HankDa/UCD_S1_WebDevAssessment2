@@ -26,39 +26,25 @@
        
        <div class="column1">
           <div id="column1_l">
-            <select id = 'se1'>
-                <option>"select"</option>>
+            <select id = 'sel_date' onchange="sel_date_function(id)">
+                <option>select date</option>>
             </select>
           </div>
 
           <div id="column1_r">
-            <select>
-                <option>請選擇你最愛的寵物</option>
-                <option>Dog</option>
-                <option>Cat</option>
-                <option>Hamster</option>
-                <option>Parrot</option>
-                <option>Spider</option>
-                <option>Goldfish</option>
+            <select id = 'sel_time' onchange="sel_time_function(id)">
+                <option>All</option>
             </select>
+            <button id = 'btn_submit'onclick=btn_session_function(id) disabled =true>submit</button>
           </div>
-
-          
        </div>
        
-       <!-- <div class="column2">
+       <div class="column2">
            <div id="column2_l">
-              <figure><a href="https://www.linkedin.com/in/hank-ta-10b081127/" target="_blank">
-                  <img class="pic_proj" src="image/linkedin.png" alt="ML"></a>
-                  </figure>
-          </div>
-          <div id="column2_r">
-              <figure><a href="https://www.instagram.com/?hl=en" target="_blank">
-                  <img class="pic_proj" src="image/instagram.jpg" alt="Auto"></a>
-                  </figure>
+
           </div>
            
-       </div> -->
+       </div>
         
        <div class="column3">
          
