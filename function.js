@@ -4,7 +4,7 @@ var url = "scheduling.json";
 var parsedObj;
 var dir_date = {}; //{date1:[firstLayerNum,day],date2:[firstLayerNum,day],...}
 var dir_date_time ={};//{date1:{timeslot1:slotId1,timeslot2:slotId2,...},date2:{...},...}
-var select_date ="", select_time="all";
+var select_date ="", select_time="all", select_type ="all";
 
 /*------------------Read Json file--------------------*/    
 var xmlhttp1 = new XMLHttpRequest();
@@ -58,7 +58,7 @@ function readTime(obj,date,dir_date_time)
     }
 }
 /*------------------HTML element creator ---------------------------------------*/
-function create_table(temp_dir_ls,sessions_id)
+function create_table(temp_dir_ls,sessions_id,type_value)
 {
     var text="";
     //create table for each session
@@ -72,16 +72,30 @@ function create_table(temp_dir_ls,sessions_id)
             var type_local = temp_dir_ls[j].type;
             var sessionID_local = temp_dir_ls[j].sessionId;
             var submissions_local = temp_dir_ls[j].submissions;
+            if(type_value === 'other')
+            {
+                if(type_local === "paper")
+                {
+                    continue;
+                }
+            }
+            else if(type_value === "paper")
+            {
+                if(type_local !== "paper")
+                {
+                    continue;
+                }
+            }
 
-            text += "<tr><td>" +
+            text += "<tr><td id='table_title'>" +
             title_local +
-            "</td><td>" +
+            "</td><td id='table_time'>" +
             time_local +
-            "</td><td>" +
+            "</td><td id='table_room'>" +
             room_local +
-            "</td><td>" +
+            "</td><td id= table_type>" +
             type_local +
-            "</td><td>" +
+            "</td><td id = table_submissions>" +
             "<button id="+sessionID_local+" type=\"button\" onclick=\"btn_submissons_function(id)\">More</button>" 
             "</td></tr>";
 
@@ -166,7 +180,7 @@ function read_time_display(obj,date,dir_date_time)
     document.getElementById("sel_time").innerHTML = text;
 }
 
-function read_Session_display(obj,date,time,sessions_id)
+function read_Session_display(obj,date,time,sessions_id,type_value)
 {
     
     var first_layer = dir_date[select_date][0];
@@ -177,14 +191,24 @@ function read_Session_display(obj,date,time,sessions_id)
         if(time === "all")
         {
             var slotID_keys = Object.keys(obj[first_layer].slots);
-            text = "<br><br><table>";
+            text = "<br><br><table width='100%'>";
+
+            text+=
+            "<colgroup>"+
+            "<col style='width:60%'>"+
+            "<col style='width:10%'>"+
+            "<col style='width:10%'>"+
+            "<col style='width:10%'>"+
+            "<col style='width:10%'>"+
+            "</colgroup>"  
+            
             text += "<tr><th>Title</th><th>Start time</th><th>Room</th><th>Type</th><th>submissions</th></tr>";  
             for(var i=0; i<slotID_keys.length;i++)
             {   
                 //read sessions in selected slot by slotID
                 var temp_dir_ls = obj[first_layer].slots[slotID_keys[i]].sessions;
                 //create table for each session
-                text += create_table(temp_dir_ls,sessions_id)
+                text += create_table(temp_dir_ls,sessions_id,type_value)
             }
             text += "</table>"; 
         }
@@ -195,10 +219,19 @@ function read_Session_display(obj,date,time,sessions_id)
             var temp_dir_ls = obj[first_layer].slots[slotID].sessions;
             if(temp_dir_ls.length>0)
             {
-                text = "<br><br><table>";
+                text = "<br><br><table width='100%'>";
+                text+=
+                "<colgroup>"+
+                "<col style='width:60%'>"+
+                "<col style='width:10%'>"+
+                "<col style='width:10%'>"+
+                "<col style='width:10%'>"+
+                "<col style='width:10%'>"+
+                "</colgroup>" 
+                
                 text += "<tr><th>Title</th><th>Start time</th><th>Room</th><th>Type</th><th>submissions</th></tr>";  
                 //create table for each session
-                text += create_table(temp_dir_ls,sessions_id)
+                text += create_table(temp_dir_ls,sessions_id,type_value)
                 text += "</table>"; 
             }
             else
@@ -224,6 +257,9 @@ function sel_date_function(id)
     select_time ="all";
     read_time_display(parsedObj,date,dir_date_time);
     document.getElementById("btn_submit").disabled = false;
+    document.getElementById("type_all").disabled = true;
+    document.getElementById("type_paper").disabled = true;
+    document.getElementById("type_other").disabled = true;
 }
 
 
@@ -239,22 +275,39 @@ function sel_time_function(id)
         var first_layer = parsedObj[dir_date[select_date][0]];
         select_time = parsedObj[dir_date[select_date][0]].slots[slotID].time;
     }
-
+    document.getElementById("type_all").disabled = true;
+    document.getElementById("type_paper").disabled = true;
+    document.getElementById("type_other").disabled = true;
     console.log('select_time:',select_time);
 }
 
 function btn_session_function()
 {
-    var id ="";
+
     console.log('in btn_session_function select_time:',select_time);
-    read_Session_display(parsedObj,select_date,select_time,id);
+    read_Session_display(parsedObj,select_date,select_time);
+    document.getElementById("type_all").disabled = false;
+    document.getElementById("type_paper").disabled = false;
+    document.getElementById("type_other").disabled = false;
+    document.getElementById("type_all").checked = true;
+
 }
 
-function btn_submissons_function(id)
+function btn_submissons_function(session_id)
 {   
-    console.log("more : ",id)
-    read_Session_display(parsedObj,select_date,select_time,id);
+    console.log("more : ",session_id)
+    read_Session_display(parsedObj,select_date,select_time,session_id,select_type);
 }
+
+function radiobtn_type_function(type_value)
+{   
+    session_id="";
+    console.log("value : ",type_value);
+    select_type = type_value
+    read_Session_display(parsedObj,select_date,select_time,session_id,select_type);
+
+}
+
 /*-------------------------------------------------------*/
 
 

@@ -65,7 +65,7 @@
   #mainContent{
       min-height: 100%;
       padding-top: 50px;
-      padding-bottom:50px;
+      padding-bottom:10px;
       margin-left: auto;
       margin-right: auto;
       text-align: center;
@@ -79,15 +79,14 @@
   }
   
   .column1 {
-    /* float: left; */
-    width: 40%;
-    padding: 15px;
+    width: 100%;
+    padding-bottom: 70px;
   }
 
-  .column1_l{
+  #column1_l,#column1_r{
+    float: left;
     width: 50%;
-    padding: 15px;
-  }
+}
 
   /* .columnr {
     float: right;
@@ -108,6 +107,11 @@
     height: 50px;
   }
   
+  table{
+    width: 100%; 
+    table-layout: fixed;
+  }
+
   table, th, td {
     border-bottom: 1px solid grey;
     border-top: 1px solid grey;
@@ -116,6 +120,19 @@
     border-collapse: collapse;
     padding-right: 7px;
     padding-left: 7px;
+}
+
+td{
+  text-align: left;
+}
+
+#table_title
+{
+  width: 60%;
+}
+#table_time,#table_room,#table_type,#table_submissions
+{
+  width: 60%;
 }
 
 th {
