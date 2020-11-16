@@ -108,3 +108,28 @@
     height: 50px;
   }
   
+  table, th, td {
+    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
+    border-left: 1px solid #f1f1f1;
+    border-right: 1px solid #f1f1f1;
+    border-collapse: collapse;
+    padding-right: 7px;
+    padding-left: 7px;
+}
+
+th {
+    background-color: #4C50AF;
+    color: white;
+    text-align: left;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+      
+table tr:nth-child(odd) {
+    background-color: #f1f1f1;
+}
+
+table tr:nth-child(even) {
+    background-color: #ffffff;
+}

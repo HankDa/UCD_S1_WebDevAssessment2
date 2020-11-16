@@ -1,35 +1,24 @@
 
 /*------------------Glabal Varible---------------------*/
-var url_json = "scheduling.json";
-var parsedObj = new Object();
+var url = "scheduling.json";   
+var parsedObj;
 var dir_date = {}; //{date1:[firstLayerNum,day],date2:[firstLayerNum,day],...}
 var dir_date_time ={};//{date1:{timeslot1:slotId1,timeslot2:slotId2,...},date2:{...},...}
 var select_date ="", select_time="all";
-/*-----------------------------------------------------*/
-function readJson(url)
-{
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET", url, false); // global varible issue: change true to false, check why?
-    xmlhttp.send();
-    parsedObj = JSON.parse(xmlhttp.responseText); 
 
-    // xmlhttp.onreadystatechange = parseJsFileToObj(xmlhttp,obj_json); //check this problem
-}
-
-function parseJsFileToObj(xmlhttp,obj_json)
-{
-    console.log("2")
-    console.log(xmlhttp.readyState)
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-    {
-        console.log("Hello3")
+/*------------------Read Json file--------------------*/    
+var xmlhttp1 = new XMLHttpRequest();
+xmlhttp1.onreadystatechange = function() {
+    if (xmlhttp1.readyState == 4 && xmlhttp1.status == 200) {
+        
         //Parse the JSON data to a JavaScript variable. 
-        obj_json = JSON.parse(xmlhttp.responseText);    // Hank: gobal varible fail
-        console.log(obj_json);
-        // This function is defined below and deals with the JSON data parsed from the file. 
-        // displayJSON(obj); 
+        parsedObj = JSON.parse(xmlhttp1.responseText); 
+        read_date_display(parsedObj)
     }
-}
+};
+
+xmlhttp1.open("GET", url, true);
+xmlhttp1.send();
 
 /*------------------Prase specific element in Json file function---------------------*/
 function readDate(obj,dir_date_l)
@@ -61,14 +50,73 @@ function readTime(obj,date,dir_date_time)
                     dir_time[obj[i].slots[keys[j]].time] = obj[i].slots[keys[j]].slotId
                     dir_date_time[date] = dir_time;
                 }
-                console.log("dir_date_time",dir_date_time)
+                // console.log("dir_date_time",dir_date_time)
                 return 0;
             }
         }
         return -1;
     }
 }
+/*------------------HTML element creator ---------------------------------------*/
+function create_table(temp_dir_ls,sessions_id)
+{
+    var text="";
+    //create table for each session
+    if(temp_dir_ls.length)
+    {
+        for(var j=0;j<temp_dir_ls.length; j++)
+        {   
+            var title_local = temp_dir_ls[j].title;
+            var time_local = temp_dir_ls[j].time;
+            var room_local = temp_dir_ls[j].room;
+            var type_local = temp_dir_ls[j].type;
+            var sessionID_local = temp_dir_ls[j].sessionId;
+            var submissions_local = temp_dir_ls[j].submissions;
 
+            text += "<tr><td>" +
+            title_local +
+            "</td><td>" +
+            time_local +
+            "</td><td>" +
+            room_local +
+            "</td><td>" +
+            type_local +
+            "</td><td>" +
+            "<button id="+sessionID_local+" type=\"button\" onclick=\"btn_submissons_function(id)\">More</button>" 
+            "</td></tr>";
+
+            
+            if(sessionID_local === sessions_id)
+            {
+                console.log('sessions_id',sessions_id,"sessionID_local",sessionID_local)
+                if (submissions_local.length >0)
+                {
+                    // console.log("temp_dir_ls.submissions",submissions_local[k].title);
+                    for(var k=0;k<submissions_local.length;k++)
+                    {
+                        // console.log("temp_dir_ls.submissions",submissions_local[k].title);
+                        var title_local_s = submissions_local[k].title;
+                        var doiUrl_local_s = submissions_local[k].doiUrl;
+                        text += "<tr><td colspan='2'>" +
+                        title_local_s +
+                        "</td><td colspan='3'>" +
+                        "<a href="+doiUrl_local_s+" target='_blank'>Detail Information</a>"
+                        "</td></tr>";
+                    }
+                }
+                else
+                {
+                    console.log("temp_dir_ls.submissions","No submisson");
+                }
+            }
+        }
+    }
+    else
+    {
+        console.log("No sessions this slot");
+    }
+    return text
+}
 /*------------------display specific content ---------------------------------------*/
 function read_date_display(obj) 
 {
@@ -85,7 +133,6 @@ function read_date_display(obj)
             for(var i =0; i < keys.length; i++) 
             {
                 text +="<option value="+keys[i]+">"+keys[i]+" ,"+dir_date[keys[i]][1]+"</option>";
-                // console.log(text);
             }  
         }
     }
@@ -103,18 +150,14 @@ function read_time_display(obj,date,dir_date_time)
     try
     {
         readTime(obj,date,dir_date_time)
-        
         text += "<option value ='all'>all</option>"
-        // console.log(text);
-        var keys = Object.keys(dir_date_time[date]);
-        // console.log("dir_date_time keys",keys)
 
+        //keys = slots in specific date
+        var keys = Object.keys(dir_date_time[date]);
         for(var i=0; i < keys.length; i++)
         {
             text +="<option value="+dir_date_time[date][keys[i]]+">"+keys[i]+"</option>";
-
         }
-        // console.log(text)
     }
     catch
     {
@@ -123,69 +166,53 @@ function read_time_display(obj,date,dir_date_time)
     document.getElementById("sel_time").innerHTML = text;
 }
 
-function read_Session_display(obj,date,time)
+function read_Session_display(obj,date,time,sessions_id)
 {
+    
     var first_layer = dir_date[select_date][0];
     var text = ""
-    console.log('in read_Session_display , text1: ',text);
     document.getElementById("column2_l").innerHTML = text;
-    if(time === "all")
+    try
     {
-        var slotID_keys = Object.keys(obj[first_layer].slots);
-        // console.log('slotID_keys',slotID_keys)
-        for(var i=0; i<slotID_keys.length;i++)
+        if(time === "all")
         {
-            var temp_dir_ls = obj[first_layer].slots[slotID_keys[i]].sessions;
-            if(temp_dir_ls.length)
-            {
-                for(var i=0;i<temp_dir_ls.length; i++)
-                {   
-                    var data = [];
-                    data = [temp_dir_ls[i].title,temp_dir_ls[i].time,temp_dir_ls[i].room,temp_dir_ls[i].type];
-
-                    text+= "<p>"+data[0]+"</p>";
-                    text+= "<p>"+"time:"+data[1];
-                    text+= "room:"+data[2];
-                    text+= "type:"+data[3]+"</p>";
-                    
-                    text+= "<br>";
-                    // console.log("data:",data);
-                }
+            var slotID_keys = Object.keys(obj[first_layer].slots);
+            text = "<br><br><table>";
+            text += "<tr><th>Title</th><th>Start time</th><th>Room</th><th>Type</th><th>submissions</th></tr>";  
+            for(var i=0; i<slotID_keys.length;i++)
+            {   
+                //read sessions in selected slot by slotID
+                var temp_dir_ls = obj[first_layer].slots[slotID_keys[i]].sessions;
+                //create table for each session
+                text += create_table(temp_dir_ls,sessions_id)
             }
-            else
-            {
-                text = "<p>"+"No sessions in the period"+"</p>";
-                console.log("No sessions in the period");
-            }
-        }
-    }
-    else
-    {
-        var slotID = dir_date_time[date][time];
-        var temp_dir_ls = obj[first_layer].slots[slotID].sessions;
-        if(temp_dir_ls.length)
-        {
-            console.log("Oops");
-            for(var i=0;i<temp_dir_ls.length; i++)
-            {
-                var data = [];
-                data = [temp_dir_ls[i].title,temp_dir_ls[i].time,temp_dir_ls[i].room,temp_dir_ls[i].type];
-                for(var j=0; j<data.length; j++)
-                {
-                    text+= "<p>"+data[j]+"</p>";
-                }
-                text+= "<br>";
-                // console.log("data:",data);
-            }
+            text += "</table>"; 
         }
         else
         {
-            text = "<p>"+"No sessions in the period"+"</p>";
-            console.log("No sessions in the period");
-            console.log('in read_Session_display , text2: ',text);
+            var slotID = dir_date_time[date][time];
+            //read sessions in selected slot by slotID
+            var temp_dir_ls = obj[first_layer].slots[slotID].sessions;
+            if(temp_dir_ls.length>0)
+            {
+                text = "<br><br><table>";
+                text += "<tr><th>Title</th><th>Start time</th><th>Room</th><th>Type</th><th>submissions</th></tr>";  
+                //create table for each session
+                text += create_table(temp_dir_ls,sessions_id)
+                text += "</table>"; 
+            }
+            else
+            {
+                text= "<p>No sessions in this slot</p>"
+            }
+
         }
+       
     }
-    console.log('in read_Session_display , text3: ',text);
+    catch
+    {
+        text += "Fail to read sessions"
+    }
     document.getElementById("column2_l").innerHTML = text;
 }
 /*------------------on-click function---------------------*/
@@ -218,12 +245,16 @@ function sel_time_function(id)
 
 function btn_session_function()
 {
+    var id ="";
     console.log('in btn_session_function select_time:',select_time);
-    read_Session_display(parsedObj,select_date,select_time);
+    read_Session_display(parsedObj,select_date,select_time,id);
+}
+
+function btn_submissons_function(id)
+{   
+    console.log("more : ",id)
+    read_Session_display(parsedObj,select_date,select_time,id);
 }
 /*-------------------------------------------------------*/
 
-// initiate funciton
-readJson(url_json)
-read_date_display(parsedObj)
 
