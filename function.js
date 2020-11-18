@@ -1,4 +1,3 @@
-
 /*------------------Glabal Varible---------------------*/
 var url = "scheduling.json";   
 var parsedObj;
@@ -8,6 +7,7 @@ var select_date ="", select_time="all", select_type ="all";
 
 /*------------------Read Json file--------------------*/    
 var xmlhttp1 = new XMLHttpRequest();
+
 xmlhttp1.onreadystatechange = function() {
     if (xmlhttp1.readyState == 4 && xmlhttp1.status == 200) {
         
@@ -57,6 +57,7 @@ function readTime(obj,date,dir_date_time)
         return -1;
     }
 }
+
 /*------------------HTML element creator ---------------------------------------*/
 function create_table(temp_dir_ls,sessions_id,type_value)
 {
@@ -87,7 +88,7 @@ function create_table(temp_dir_ls,sessions_id,type_value)
                 }
             }
 
-            text += "<tr><td id='table_title'>" +
+            text += "<tr class='main_row'><td id='table_title'>" +
             title_local +
             "</td><td id='table_time'>" +
             time_local +
@@ -99,7 +100,6 @@ function create_table(temp_dir_ls,sessions_id,type_value)
             "<button id="+sessionID_local+" type=\"button\" onclick=\"btn_submissons_function(id)\">More</button>" 
             "</td></tr>";
 
-            
             if(sessionID_local === sessions_id)
             {
                 console.log('sessions_id',sessions_id,"sessionID_local",sessionID_local)
@@ -111,7 +111,7 @@ function create_table(temp_dir_ls,sessions_id,type_value)
                         // console.log("temp_dir_ls.submissions",submissions_local[k].title);
                         var title_local_s = submissions_local[k].title;
                         var doiUrl_local_s = submissions_local[k].doiUrl;
-                        text += "<tr><td colspan='2'>" +
+                        text += "<tr class='sub_row'><td colspan='2'>" +
                         title_local_s +
                         "</td><td colspan='3'>" +
                         "<a href="+doiUrl_local_s+" target='_blank'>Detail Information</a>"
@@ -121,6 +121,7 @@ function create_table(temp_dir_ls,sessions_id,type_value)
                 else
                 {
                     console.log("temp_dir_ls.submissions","No submisson");
+                    text += "<tr><td colspan='5'>"+"This session without submissons"+"</td></tr>";
                 }
             }
         }
@@ -131,6 +132,7 @@ function create_table(temp_dir_ls,sessions_id,type_value)
     }
     return text
 }
+
 /*------------------display specific content ---------------------------------------*/
 function read_date_display(obj) 
 {
@@ -202,7 +204,7 @@ function read_Session_display(obj,date,time,sessions_id,type_value)
             "<col style='width:10%'>"+
             "</colgroup>"  
             
-            text += "<tr><th>Title</th><th>Start time</th><th>Room</th><th>Type</th><th>submissions</th></tr>";  
+            text += "<tr><th id='th_title'>Title</th><th id='th_time'>Start time</th><th id='th_room'>Room</th><th id='th_type'>Type</th><th id='th_sub'>submissions</th></tr>";  
             for(var i=0; i<slotID_keys.length;i++)
             {   
                 //read sessions in selected slot by slotID
@@ -248,6 +250,7 @@ function read_Session_display(obj,date,time,sessions_id,type_value)
     }
     document.getElementById("column2_l").innerHTML = text;
 }
+
 /*------------------on-click function---------------------*/
 function sel_date_function(id) 
 {
@@ -307,7 +310,6 @@ function radiobtn_type_function(type_value)
     read_Session_display(parsedObj,select_date,select_time,session_id,select_type);
 
 }
-
 /*-------------------------------------------------------*/
 
 

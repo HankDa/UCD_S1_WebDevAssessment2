@@ -11,28 +11,21 @@
  
 <body>
     <header class="header">
-        <h1>Hank's Website</h1>
-        
-        <!-- <nav class="topnav">
-            <a href="index.html">home</a>
-            <a href="education.html">education</a>
-            <a href="project.html">project</a>
-            <a href="gallary.html">gallary</a>
-            <a class="active" href="contact.html">contact</a>
-        </nav> -->
+        <h1>Sessions Time Table</h1>
     </header>
 
     <div id="mainContent">
        
        <div class="column1">
           <div id="column1_l">
-            <select id = 'sel_date' onchange="sel_date_function(id)">
+            <p>Select intrested date and time then search</p>
+            <select id = 'sel_date' onchange="sel_date_function(id) ">
                 <option>select date</option>>
             </select>
             <select id = 'sel_time' onchange="sel_time_function(id)">
                 <option>All</option>
             </select>
-            <button id = 'btn_submit'onclick=btn_session_function(id) disabled =true>submit</button>
+            <button id = 'btn_submit'onclick=btn_session_function(id) disabled =true>Search</button>
 
 
           </div>
@@ -62,7 +55,7 @@
    </div>
       
     <footer>
-        <p> Web development assignment 1<br>ming-han.ta@ucdconnect.ie </p>
+        <p> Web Development Assignment 2<br>ming-han.ta@ucdconnect.ie </p>
     </footer>
 
     <script src="function.js"></script>

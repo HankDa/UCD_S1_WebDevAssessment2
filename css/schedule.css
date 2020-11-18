@@ -5,18 +5,23 @@
   html, body 
   {
     margin: 0;
-    background-color: #f1f1f1;
+    background-color: #000;
     height: 100%;
+    /* background-image: url('/WebDevAssignment2/image/background_img.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; */
   }
   
   h1,h2
   {
       font-family:Andale Mono;
+      color: #33ccff;
   }
   
   /* Style the header */
   header {
-    background-color: #f1f1f1;
+    /* background-color: #f8cba1; */
     margin-top: 15px;
     margin-bottom: 15px;
     text-align: center;
@@ -30,46 +35,28 @@
       padding: 0;
       margin: 0;
   }
-  
-  /* Style the top navigation bar */
-  .topnav {
-    overflow: hidden;
-    background-color: #333;
-  }
-  
-  /* Style the topnav links */
-  .topnav a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
+
+  footer {
+    /* background-color: #f1f1f1; */
+    padding-bottom: 10px;
     text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    text-transform: uppercase;
+    font-size: 10px;
+    height: 50px;
+    color:#33ccff;
   }
   
-  .topnav a:last-child {   
-      float: right;
-  }
-  
-  a.active {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  /* Change color on hover */
-  .topnav a:hover:not(.active) {
-    background-color: #ddd;
-    color: black;
-  }
   #mainContent{
-      min-height: 100%;
-      padding-top: 50px;
+      width: 100%;
+      height: auto;
+      min-height: 50%;
+      padding-top: 10px;
       padding-bottom:10px;
+      padding-left: 5px;
+      padding-right: 5px;
       margin-left: auto;
       margin-right: auto;
       text-align: center;
-      background-color: white
+      /* background-color: white; */
   }
   
   #mainContent:after {
@@ -79,52 +66,79 @@
   }
   
   .column1 {
+
     width: 100%;
     padding-bottom: 70px;
+    
   }
 
   #column1_l,#column1_r{
     float: left;
     width: 50%;
-}
+  }
 
-  /* .columnr {
-    float: right;
-    width: 60%;
-    padding: 50px;
+  #column1_r label{
+    font-family:Andale Mono;
+    font-size: 15px;
+    color:white;
   }
-  
-  .columnr p{
-      text-align: left;
-      font-size: 20px;
-  } */
-  
-  footer {
-    background-color: #f1f1f1;
-    padding-bottom: 10px;
-    text-align: center;
-    font-size: 10px;
-    height: 50px;
+  .column1 p
+  {
+    font-family:Andale Mono;
+    color: #ffb31a;
+    font-size: 20px;
   }
-  
+
+  /* pull down list */
+  #sel_date,#sel_time{
+    width:30%;   
+    font-family:Andale Mono;
+    color:black;
+   }
+  #sel_time{
+    width:20%; 
+      
+   }
+   #btn_submit{
+    font-family:Andale Mono;
+    color:black;
+   }
+
+   /* table */
   table{
     width: 100%; 
     table-layout: fixed;
+    
   }
 
   table, th, td {
-    border-bottom: 1px solid grey;
-    border-top: 1px solid grey;
-    border-left: 1px solid #f1f1f1;
-    border-right: 1px solid #f1f1f1;
+    border-bottom: 1px solid rgb(71, 69, 69);
+    border-top: 1px solid rgb(0, 0, 0);
+    border-left: 1px solid #d3c7c7;
+    border-right: 1px solid #d3c7c7;
     border-collapse: collapse;
     padding-right: 7px;
     padding-left: 7px;
+    color: #d3c7c7;
+}
+th {
+  font-family:Andale Mono;
+  background-color: #2a345e;
+  color: white;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+#th_title
+{
+  text-align: left;
 }
 
 td{
   text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+tr:hover {background-color:#75736d;}
 
 #table_title
 {
@@ -135,18 +149,21 @@ td{
   width: 60%;
 }
 
-th {
-    background-color: #4C50AF;
-    color: white;
-    text-align: left;
-    padding-top: 12px;
-    padding-bottom: 12px;
+#table_submissions,#table_type,#table_room,#table_time
+{
+  text-align: center;
 }
+.sub_row,.sub_row td
+{
+  background-color: #aaa79f;
+  color: black;
+}
+
       
-table tr:nth-child(odd) {
+/* .main_row:nth-child(odd) {
     background-color: #f1f1f1;
 }
 
-table tr:nth-child(even) {
+.main_row:nth-child(even) {
     background-color: #ffffff;
-}
+} */
