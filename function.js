@@ -29,7 +29,6 @@ function readDate(obj,dir_date_l)
     }
     return 0;
 }
-
 function readTime(obj,date,dir_date_time)
 {
     if(date in dir_date_time)
@@ -50,7 +49,6 @@ function readTime(obj,date,dir_date_time)
                     dir_time[obj[i].slots[keys[j]].time] = obj[i].slots[keys[j]].slotId
                     dir_date_time[date] = dir_time;
                 }
-                // console.log("dir_date_time",dir_date_time)
                 return 0;
             }
         }
@@ -113,15 +111,15 @@ function create_table(temp_dir_ls,sessions_id,type_value)
                         var doiUrl_local_s = submissions_local[k].doiUrl;
                         text += "<tr class='sub_row'><td colspan='2'>" +
                         title_local_s +
-                        "</td><td colspan='3'>" +
-                        "<a href="+doiUrl_local_s+" target='_blank'>Detail Information</a>"
+                        "</td><td colspan='3' style='text-align:center;'>" +
+                        "<a href="+doiUrl_local_s+" target='_blank' style='color:#ffb31a'>Detail Information</a>"
                         "</td></tr>";
                     }
                 }
                 else
                 {
                     console.log("temp_dir_ls.submissions","No submisson");
-                    text += "<tr><td colspan='5'>"+"This session without submissons"+"</td></tr>";
+                    text += "<tr><td colspan='5' style='text-align:center;'>"+"This session without submissons"+"</td></tr>";
                 }
             }
         }
@@ -264,7 +262,6 @@ function sel_date_function(id)
     document.getElementById("type_paper").disabled = true;
     document.getElementById("type_other").disabled = true;
 }
-
 
 function sel_time_function(id)
 {

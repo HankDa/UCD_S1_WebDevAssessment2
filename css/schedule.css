@@ -5,12 +5,8 @@
   html, body 
   {
     margin: 0;
-    background-color: #000;
+    background-color: #0A0A0A;
     height: 100%;
-    /* background-image: url('/WebDevAssignment2/image/background_img.jpg');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center; */
   }
   
   h1,h2
@@ -72,6 +68,13 @@
     
   }
 
+  .column1 p
+  {
+    font-family:Andale Mono;
+    color: #ffb31a;
+    font-size: 20px;
+  }
+
   #column1_l,#column1_r{
     float: left;
     width: 50%;
@@ -82,12 +85,7 @@
     font-size: 15px;
     color:white;
   }
-  .column1 p
-  {
-    font-family:Andale Mono;
-    color: #ffb31a;
-    font-size: 20px;
-  }
+
 
   /* pull down list */
   #sel_date,#sel_time{
@@ -114,11 +112,9 @@
   table, th, td {
     border-bottom: 1px solid rgb(71, 69, 69);
     border-top: 1px solid rgb(0, 0, 0);
-    border-left: 1px solid #d3c7c7;
-    border-right: 1px solid #d3c7c7;
     border-collapse: collapse;
-    padding-right: 7px;
-    padding-left: 7px;
+    padding-right: 10px;
+    padding-left: 10px;
     color: #d3c7c7;
 }
 th {
@@ -155,15 +151,7 @@ tr:hover {background-color:#75736d;}
 }
 .sub_row,.sub_row td
 {
-  background-color: #aaa79f;
+  background-color: #7c7b79;
   color: black;
 }
 
-      
-/* .main_row:nth-child(odd) {
-    background-color: #f1f1f1;
-}
-
-.main_row:nth-child(even) {
-    background-color: #ffffff;
-} */
